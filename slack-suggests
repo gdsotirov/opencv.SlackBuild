@@ -1,1 +1,3 @@
-python >= 2.5
+octave >= 3.4.3
+python >= 2.6
+swig >= 2.0.4

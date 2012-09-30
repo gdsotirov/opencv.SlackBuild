@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.4 2012/09/29 18:49:35 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.5 2012/09/30 13:19:37 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.2.0
+VERSION=2.4.2
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -55,29 +55,37 @@ cd $SRC
 fix_source
 
 # Configure, make & install
+# HTML documentation requires Sphinx
 cmake -LA \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_LIBRARY_PATH=/usr/lib${LIBDIRSUFFIX} \
+      -DOPENCV_DOC_INSTALL_PATH=/usr/doc/$PNAME-$VERSION \
+      -DBUILD_SHARED_LIBS=ON \
       -DBUILD_PACKAGE=OFF \
       -DBUILD_NEW_PYTHON_SUPPORT=ON \
       -DBUILD_OCTAVE_SUPPORT=ON \
-      -DBUILD_SHARED_LIBS=ON \
       -DBUILD_SWIG_PYTHON_SUPPORT=ON \
+      -DBUILD_DOCS=ON \
+      -DBUILD_EXAMPLES=ON \
       -DBUILD_TESTS=ON \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX=/usr \
       -DENABLE_SSE=ON \
       -DENABLE_SSE2=ON\
       -DENABLE_SSE3=ON \
+      -DENABLE_SSSE3=ON \
       -DENABLE_SSE41=ON \
       -DENABLE_SSE42=ON \
-      -DENABLE_SSSE3=ON \
+      -DENABLE_FAST_MATH=OFF \
+      -DENABLE_OMIT_FRAME_POINTER=OFF \
+      -DENABLE_PRECOMPILED_HEADERS=ON \
+      -DOPENCV_BUILD_3RDPARTY_LIBS=OFF \
       -DINSTALL_C_EXAMPLES=ON \
       -DINSTALL_OCTAVE_EXAMPLES=ON \
       -DINSTALL_PYTHON_EXAMPLES=ON \
-      -DBUILD_PACKAGE=OFF \
       -DCMAKE_C_FLAGS="$SLKCFLAGS" \
       -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
-      -DUSE_FAST_MATH=OFF \
       -DWITH_1394=ON \
+      -DWITH_EIGEN=ON \
       -DWITH_FFMPEG=ON \
       -DWITH_GSTREAMER=ON \
       -DWITH_GTK=ON \
@@ -94,15 +102,14 @@ make DESTDIR=$PKG install || exit 6
 
 # Move documents in the right place
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION
-mv $PKG/usr/share/$PNAME/doc/* $PKG/usr/doc/$PNAME-$VERSION
-rm -rf $PKG/usr/share/$PNAME/doc
+mv $PKG/usr/share/$NAME/doc/* $PKG/usr/doc/$PNAME-$VERSION
+rm -rf $PKG/usr/share/$NAME/doc
 ( cd $PKG/usr/doc/$PNAME-$VERSION; mv license.txt COPYING )
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION/examples
-mv $PKG/usr/share/$PNAME/samples/* $PKG/usr/doc/$PNAME-$VERSION/examples/
-rm -rf $PKG/usr/share/$PNAME/samples
+mv $PKG/usr/share/$NAME/samples/* $PKG/usr/doc/$PNAME-$VERSION/examples/
+rm -rf $PKG/usr/share/$NAME/samples
 cp -a $SRC/samples/python $PKG/usr/doc/$PNAME-$VERSION/examples/
-rm $PKG/usr/share/$PNAME/OpenCVConfig.cmake
-mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
+rm -f $PKG/usr/share/$NAME/*.cmake
 
 # Preapre
 bin_perms $PKG

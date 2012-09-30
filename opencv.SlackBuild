@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.6 2012/09/30 18:30:55 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.7 2012/09/30 18:32:22 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -111,7 +111,9 @@ rm -rf $PKG/usr/share/$NAME/samples
 cp -a $SRC/samples/python $PKG/usr/doc/$PNAME-$VERSION/examples/
 rm -f $PKG/usr/share/$NAME/*.cmake
 # CMake doesn't properly install even configured
-mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
+if [ "${LIBDIRSUFFIX}" != "" ]; then
+  mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
+fi
 
 # Preapre
 bin_perms $PKG

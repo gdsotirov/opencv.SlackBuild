@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.10 2015/06/14 18:16:49 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.11 2015/06/14 20:10:23 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.4.11
+VERSION=3.0.0
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -94,7 +94,8 @@ cmake -LA \
       -DWITH_QT=ON \
       -DWITH_TIFF=ON \
       -DWITH_V4L=ON \
-      -DWITH_XINE=ON || exit 4
+      -DWITH_XINE=ON \
+      -DWITH_EIGEN=OFF || exit 4
 
 # Build & install
 make VERBOSE=1 -j4 || exit 5

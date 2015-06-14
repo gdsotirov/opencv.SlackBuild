@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.8 2015/06/14 15:55:28 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.9 2015/06/14 16:57:13 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -35,13 +35,13 @@ if [ ! -e $TMP ]; then
   mkdir -p $TMP # location to build the source
 fi
 
-SRC=$TMP/$NAME-$VERSION
+SRC=$TMP/$PNAME-$VERSION
 if [ -e $SRC -a -d $SRC ]; then
   echo "Source directory '$SRC' already exists! Plaese, move it or remove it."
   exit 1
 fi
 
-PKG=$TMP/package-$NAME
+PKG=$TMP/package-$PNAME
 if [ -e $PKG -a -d $PKG ]; then
   echo "Package creation directory '$PKG' already exists! Please, move it or remove it."
   exit 2

@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.9 2015/06/14 16:57:13 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.10 2015/06/14 18:16:49 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -104,7 +104,6 @@ make VERBOSE=1 DESTDIR=$PKG install || exit 6
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION
 mv $PKG/usr/share/$NAME/doc/* $PKG/usr/doc/$PNAME-$VERSION
 rm -rf $PKG/usr/share/$NAME/doc
-( cd $PKG/usr/doc/$PNAME-$VERSION; mv LICENSE COPYING )
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION/examples
 mv $PKG/usr/share/$NAME/samples/* $PKG/usr/doc/$PNAME-$VERSION/examples/
 rm -rf $PKG/usr/share/$NAME/samples
@@ -119,6 +118,7 @@ fi
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
 ( cd $SRC; create_docs $PKG $PNAME-$VERSION )
+( cd $PKG/usr/doc/$PNAME-$VERSION; mv LICENSE COPYING )
 
 install -m 755 -d $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install/slack-desc

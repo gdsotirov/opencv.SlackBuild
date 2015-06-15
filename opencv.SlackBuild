@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.11 2015/06/14 20:10:23 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.12 2015/06/15 19:55:09 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -102,14 +102,9 @@ make VERBOSE=1 -j4 || exit 5
 make VERBOSE=1 DESTDIR=$PKG install || exit 6
 
 # Move documents in the right place
-install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION
-mv $PKG/usr/share/$NAME/doc/* $PKG/usr/doc/$PNAME-$VERSION
-rm -rf $PKG/usr/share/$NAME/doc
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION/examples
 mv $PKG/usr/share/$NAME/samples/* $PKG/usr/doc/$PNAME-$VERSION/examples/
 rm -rf $PKG/usr/share/$NAME/samples
-cp -a $SRC/samples/python $PKG/usr/doc/$PNAME-$VERSION/examples/
-rm -f $PKG/usr/share/$NAME/*.cmake
 # CMake doesn't properly install even configured
 if [ "${LIBDIRSUFFIX}" != "" ]; then
   mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}

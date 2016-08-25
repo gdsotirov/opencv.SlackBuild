@@ -1,0 +1,38 @@
+# Backport modfications from 2.3.x to fix error undefined reference to `cvCreateCameraCapture_V4L(int)'
+diff -urNad OpenCV-2.1.0-orig/cvconfig.h.cmake OpenCV-2.1.0/cvconfig.h.cmake
+--- OpenCV-2.1.0-orig/cvconfig.h.cmake	2010-04-06 04:24:37.000000000 +0300
++++ OpenCV-2.1.0/cvconfig.h.cmake	2016-08-25 22:05:09.000000000 +0300
+@@ -19,6 +19,9 @@
+ /* V4L2 capturing support */
+ #cmakedefine HAVE_CAMV4L2
+ 
++/* V4L/V4L2 capturing support via libv4l */
++#cmakedefine HAVE_LIBV4L
++
+ /* Carbon windowing environment */
+ #cmakedefine HAVE_CARBON
+ 
+diff -urNad OpenCV-2.1.0-orig/src/highgui/cvcap.cpp OpenCV-2.1.0/src/highgui/cvcap.cpp
+--- OpenCV-2.1.0-orig/src/highgui/cvcap.cpp	2010-04-06 04:24:44.000000000 +0300
++++ OpenCV-2.1.0/src/highgui/cvcap.cpp	2016-08-25 22:06:40.000000000 +0300
+@@ -161,7 +161,7 @@
+             if (capture)
+                 return capture;
+         #endif
+-        #if defined (HAVE_CAMV4L) || defined (HAVE_CAMV4L2)
++	 #if defined HAVE_LIBV4L || (defined (HAVE_CAMV4L) && defined (HAVE_CAMV4L2))
+             capture = cvCreateCameraCapture_V4L (index);
+             if (capture)
+                 return capture;
+diff -urNad OpenCV-2.1.0-orig/src/highgui/cvcap_libv4l.cpp OpenCV-2.1.0/src/highgui/cvcap_libv4l.cpp
+--- OpenCV-2.1.0-orig/src/highgui/cvcap_libv4l.cpp	2010-04-06 04:24:44.000000000 +0300
++++ OpenCV-2.1.0/src/highgui/cvcap_libv4l.cpp	2016-08-25 22:07:24.000000000 +0300
+@@ -202,7 +202,7 @@
+ 
+ #include "_highgui.h"
+ 
+-#if !defined WIN32 && defined HAVE_CAMV4L && defined HAVE_CAMV4L2
++#if !defined WIN32 && defined HAVE_LIBV4L
+ 
+ #define CLEAR(x) memset (&(x), 0, sizeof (x))
+ 

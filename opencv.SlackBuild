@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Slackware build script for OpenCV
-# Copyright (C) 2008,2012 Georgi D. Sotirov <gdsotirov@dir.bg>
+# Copyright (C) 2008-2016 Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.3 2012/09/29 18:33:16 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.3.2.1 2016/08/25 19:20:49 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.2.0
+VERSION=2.1.0
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -53,6 +53,9 @@ cd $TMP
 tar -xvf $CWD/$NAME-$VERSION.tar.?z* || exit 3
 cd $SRC
 fix_source
+
+# Apply patch
+patch -p1 -b -z.orig < $CWD/${PNAME}-${VERSION}.diff || exit 30
 
 # Configure, make & install
 cmake -LA \
@@ -114,9 +117,10 @@ install -m 644 $CWD/slack-required $PKG/install/slack-required
 
 SBDIR=$PKG/usr/src/slackbuilds/$PNAME-$VERSION
 install -m 755 -d $SBDIR
-install -m 644 $CWD/slack-desc          $SBDIR/slack-desc
-install -m 644 $CWD/slack-required      $SBDIR/slack-required
-install -m 644 $CWD/$PNAME.SlackBuild    $SBDIR/$PNAME.SlackBuild
+install -m 644 $CWD/slack-desc               $SBDIR/slack-desc
+install -m 644 $CWD/slack-required           $SBDIR/slack-required
+install -m 644 $CWD/${PNAME}-${VERSION}.diff $SBDIR/${PNAME}-${VERSION}.diff
+install -m 644 $CWD/$PNAME.SlackBuild        $SBDIR/$PNAME.SlackBuild
 
 # Assemble
 PKGNAME=$PNAME-$VERSION-$ARCH-$BUILD$MYIN

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Slackware build script for OpenCV
-# Copyright (C) 2008-2015 Georgi D. Sotirov <gdsotirov@dir.bg>
+# Copyright (C) 2008-2016 Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.12 2015/06/15 19:55:09 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.13 2016/09/22 12:36:15 gsotirov Exp $
 #
 
 . ../../slack-package.conf

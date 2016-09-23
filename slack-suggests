@@ -1,4 +1,2 @@
-numpy >= 1.9.2
-octave >= 3.8.2
-python >= 2.7.5
-swig >= 3.0.5
+numpy >= 1.11
+python >= 2.7

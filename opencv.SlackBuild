@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.14 2016/09/23 12:37:11 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.15 2016/10/09 18:13:46 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -87,6 +87,7 @@ cmake -LAH \
       -DWITH_GDAL=ON \
       -DWITH_GSTREAMER=ON \
       -DWITH_GTK=ON \
+      -DWITH_IPP=OFF \
       -DWITH_JASPER=ON \
       -DWITH_JPEG=ON \
       -DWITH_LIBV4L=ON \

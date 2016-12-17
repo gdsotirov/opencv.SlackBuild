@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.10.2.1 2016/09/19 07:17:44 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.10.2.2 2016/12/17 14:43:47 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.4.13
+VERSION=2.4.13.1
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -50,7 +50,7 @@ mkdir -p $PKG
 
 # Extract the sources
 cd $TMP
-unzip $CWD/$PNAME-${VERSION}.zip || exit 3
+tar -xvf $CWD/$PNAME-${VERSION}.tar.?z* || exit 3
 cd $SRC
 fix_source
 

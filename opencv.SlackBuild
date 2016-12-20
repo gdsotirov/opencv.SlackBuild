@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.10.2.2 2016/12/17 14:43:47 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.10.2.3 2016/12/20 08:08:30 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.4.13.1
+VERSION=2.4.13.2
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -83,7 +83,7 @@ cmake -LA \
       -DINSTALL_OCTAVE_EXAMPLES=ON \
       -DINSTALL_PYTHON_EXAMPLES=ON \
       -DCMAKE_C_FLAGS="$SLKCFLAGS" \
-      -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+      -DCMAKE_CXX_FLAGS="$SLKCFLAGS -D__STDC_CONSTANT_MACROS" \
       -DWITH_1394=ON \
       -DWITH_EIGEN=ON \
       -DWITH_FFMPEG=ON \

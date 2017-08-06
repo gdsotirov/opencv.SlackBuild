@@ -17,14 +17,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.10.2.3 2016/12/20 08:08:30 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.10.2.4 2017/08/06 13:03:37 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=OpenCV
 PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=2.4.13.2
+VERSION=2.4.13.3
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -56,6 +56,7 @@ fix_source
 
 # Configure, make & install
 # HTML documentation requires Sphinx
+mkdir -p build; cd build
 cmake -LA \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=/usr \
@@ -94,11 +95,13 @@ cmake -LA \
       -DWITH_QT=ON \
       -DWITH_TIFF=ON \
       -DWITH_V4L=ON \
-      -DWITH_XINE=ON || exit 4
+      -DWITH_XINE=ON \
+      .. || exit 4
 
 # Build & install
 make VERBOSE=1 -j4 || exit 5
 make VERBOSE=1 DESTDIR=$PKG install || exit 6
+cd ..
 
 # Move documents in the right place
 install -d -m 755 $PKG/usr/doc/$PNAME-$VERSION

@@ -17,14 +17,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # 
-# $Id: opencv.SlackBuild,v 1.17 2017/08/06 14:00:36 gsotirov Exp $
+# $Id: opencv.SlackBuild,v 1.18 2017/11/19 07:07:33 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
-NAME=OpenCV
-PNAME=`echo $NAME | tr "[:upper:]" "[:lower:]"`
-VERSION=3.3.0
+NAME=opencv
+VERSION=3.3.1
 ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
@@ -35,13 +34,13 @@ if [ ! -e $TMP ]; then
   mkdir -p $TMP # location to build the source
 fi
 
-SRC=$TMP/${PNAME}-${VERSION}
+SRC=$TMP/${NAME}-${VERSION}
 if [ -e $SRC -a -d $SRC ]; then
   echo "Source directory '$SRC' already exists! Plaese, move it or remove it."
   exit 1
 fi
 
-PKG=$TMP/package-${PNAME}
+PKG=$TMP/package-${NAME}
 if [ -e $PKG -a -d $PKG ]; then
   echo "Package creation directory '$PKG' already exists! Please, move it or remove it."
   exit 2
@@ -50,7 +49,7 @@ mkdir -p $PKG
 
 # Extract the sources
 cd $TMP
-tar -xvf $CWD/${PNAME}-${VERSION}.tar.?z* || exit 3
+tar -xvf $CWD/${NAME}-${VERSION}.tar.?z* || exit 3
 cd $SRC
 fix_source
 
@@ -80,7 +79,7 @@ cmake -LAH \
       -DENABLE_SSE42=ON \
       -DINSTALL_C_EXAMPLES=ON \
       -DINSTALL_PYTHON_EXAMPLES=ON \
-      -DOPENCV_DOC_INSTALL_PATH=/usr/doc/${PNAME}-${VERSION} \
+      -DOPENCV_DOC_INSTALL_PATH=/usr/doc/${NAME}-${VERSION} \
       -DWITH_1394=ON \
       -DWITH_EIGEN=ON \
       -DWITH_FFMPEG=ON \
@@ -109,8 +108,8 @@ make VERBOSE=1 DESTDIR=$PKG install || exit 6
 cd ..
 
 # Move documents in the right place
-install -d -m 755 $PKG/usr/doc/${PNAME}-${VERSION}/examples
-mv $PKG/usr/share/$NAME/samples/* $PKG/usr/doc/${PNAME}-${VERSION}/examples/
+install -d -m 755 $PKG/usr/doc/${NAME}-${VERSION}/examples
+mv $PKG/usr/share/$NAME/samples/* $PKG/usr/doc/${NAME}-${VERSION}/examples/
 rm -rf $PKG/usr/share/$NAME/samples
 # CMake doesn't properly install even configured
 if [ "${LIBDIRSUFFIX}" != "" ]; then
@@ -120,21 +119,21 @@ fi
 # Preapre
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
-( cd $SRC; create_docs $PKG ${PNAME}-${VERSION} )
-( cd $PKG/usr/doc/${PNAME}-${VERSION}; mv LICENSE COPYING )
+( cd $SRC; create_docs $PKG ${NAME}-${VERSION} )
+( cd $PKG/usr/doc/${NAME}-${VERSION}; mv LICENSE COPYING )
 
 install -m 755 -d $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install/slack-desc
 install -m 644 $CWD/slack-required $PKG/install/slack-required
 
-SBDIR=$PKG/usr/src/slackbuilds/${PNAME}-${VERSION}
+SBDIR=$PKG/usr/src/slackbuilds/${NAME}-${VERSION}
 install -m 755 -d $SBDIR
 install -m 644 $CWD/slack-desc          $SBDIR/slack-desc
 install -m 644 $CWD/slack-required      $SBDIR/slack-required
-install -m 644 $CWD/${PNAME}.SlackBuild $SBDIR/${PNAME}.SlackBuild
+install -m 644 $CWD/${NAME}.SlackBuild	$SBDIR/${NAME}.SlackBuild
 
 # Assemble
-PKGNAME=${PNAME}-${VERSION}-${ARCH}-${BUILD}${MYIN}
+PKGNAME=${NAME}-${VERSION}-${ARCH}-${BUILD}${MYIN}
 cd $PKG
 makepkg -l y -c n $PKG_DIR/${PKGNAME}.txz
 cd $PKG_DIR

@@ -1,0 +1,14 @@
+# Lower minimum requirement on Cmake to 2.8.8
+# See https://github.com/opencv/opencv/issues/9870
+diff -urNad opencv-2.4.13.6-orig/CMakeLists.txt opencv-2.4.13.6/CMakeLists.txt
+--- opencv-2.4.13.6-orig/CMakeLists.txt	2018-02-21 20:27:31.000000000 +0200
++++ opencv-2.4.13.6/CMakeLists.txt	2018-02-22 21:10:19.207383858 +0200
+@@ -41,7 +41,7 @@
+ elseif(IOS)
+   cmake_minimum_required(VERSION 3.0)
+ else()
+-  cmake_minimum_required(VERSION 2.8.12.2)
++  cmake_minimum_required(VERSION 2.8.8)
+ endif()
+ 
+ if(POLICY CMP0026)
